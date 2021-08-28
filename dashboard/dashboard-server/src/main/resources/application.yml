@@ -1,0 +1,14 @@
+
+
+
+spring: 
+  jpa:
+    hibernate:
+      ddl-auto: update
+#    show-sql: true
+  datasource:
+    url: jdbc:mariadb://localhost:3306/ecomdashboard
+    username: dashboarduser
+    password: password
+    driver-class-name: com.mariadb.jdbc.Driver
+
