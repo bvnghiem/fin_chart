@@ -3,6 +3,8 @@ package nghiem.learning.web.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -45,8 +47,15 @@ public class EmployeeBasicCrudServiceImpl implements EmployeeBasicCrudService {
 
     @Override
     public Employee saveEmployee(Employee e) {
-        EmployeeEntity entity = m_empRepo.save(EmployeeModelUtils.toEntity(e));
-        return EmployeeModelUtils.fromEntity(entity);
+        Optional<EmployeeEntity> result = m_empRepo.findById(e.getId());
+        if(result.isPresent()) {
+            EmployeeEntity entity = result.get();
+            EmployeeModelUtils.updateEntity(entity, e);
+            EmployeeEntity savedEntity = m_empRepo.save(entity);
+            return EmployeeModelUtils.fromEntity(savedEntity);
+        } else {
+            throw new EntityNotFoundException("Employee not found");
+        }
     }
 
     @Override

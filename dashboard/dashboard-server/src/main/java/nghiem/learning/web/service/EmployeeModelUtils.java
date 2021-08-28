@@ -69,4 +69,27 @@ public class EmployeeModelUtils {
     public static boolean hasEntry(Collection collection) {
         return collection != null && !collection.isEmpty();
     }
+
+    public static void updateEntity(EmployeeEntity entity, Employee e) {
+        if(e.getName() != null && !e.getName().isEmpty()) {
+            entity.setName(e.getName());
+        }
+        if(e.getAge() >0 ) {
+            entity.setAge(e.getAge());
+        }
+        if(e.getOffice() != null && !e.getOffice().isEmpty()) {
+            entity.setOffice(e.getOffice());
+        }
+        if(e.getPosition() != null && !e.getPosition().isEmpty()) {
+            entity.setPosition(e.getPosition());
+        }
+        
+        if(e.getSalary() > 0) {
+            entity.setSalary(e.getSalary());
+        }
+        
+        if(e.getStartDate() != null) {
+            entity.setStartDate(e.getStartDate());
+        }
+    }
 }

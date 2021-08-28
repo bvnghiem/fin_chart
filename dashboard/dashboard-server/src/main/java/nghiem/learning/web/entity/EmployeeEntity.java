@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -34,7 +36,7 @@ public class EmployeeEntity {
     @Column
     private String office;
     
-    @Column
+    @Temporal(TemporalType.DATE)
     private Date startDate;
     
     @Column

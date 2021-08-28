@@ -10,5 +10,5 @@ spring:
     url: jdbc:mariadb://localhost:3306/ecomdashboard
     username: dashboarduser
     password: password
-    driver-class-name: com.mariadb.jdbc.Driver
+    driver-class-name: org.mariadb.jdbc.Driver
 
