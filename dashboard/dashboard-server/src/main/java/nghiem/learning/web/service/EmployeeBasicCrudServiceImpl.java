@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,12 +20,15 @@ import nghiem.learning.web.persistence.EmployeeRepository;
 @Component
 public class EmployeeBasicCrudServiceImpl implements EmployeeBasicCrudService {
 
+    private static final Logger m_logger = LogManager.getLogger(EmployeeBasicCrudServiceImpl.class);
+    
     @Autowired
     private EmployeeRepository m_empRepo;
 
     @Override
     public List<Employee> getAllEmployee() {
         List<EmployeeEntity> result = m_empRepo.findAll();
+        m_logger.info(String.format("Found %s employee from DB", result.size()));
         return EmployeeModelUtils.fromEntities(result);
     }
 
