@@ -1,0 +1,21 @@
+server:
+  port: 8081
+  
+dashboard:
+  backend:
+    protocol: http
+    host: localhost
+    port: 8080
+
+spring:
+  thymeleaf:
+    cache: false
+    enabled: true
+    check-template: true
+    check-template-location: true
+    servlet:
+      content-type: text/html; charset=utf-8
+    mode: HTML
+    prefix: classpath:/templates/
+    suffix: .html
+
