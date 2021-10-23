@@ -16,7 +16,7 @@ public class InjectedReource {
     public String getMatrixParamUsingAnnotations(@MatrixParam("test") String param,
                                                 @HeaderParam("customHeader") String headerValue,
                                                 @CookieParam("cookie_test") String cookieValue) {
-        //http://localhost:8080/messenger/api/injections;test=Hello
+        //Matrix Param sample:  http://localhost:8080/messenger/api/injections;test=Hello
         return "Matrix Param: " + param //Hello
                 + ", Header: " + headerValue
                 + ", Cookie: " + cookieValue;
