@@ -15,6 +15,7 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 
 @Path("messages")
@@ -23,10 +24,16 @@ import jakarta.ws.rs.core.MediaType;
 public class MessageResource {
 
     private MessageService messageService = new MessageService();
-    
+
     @GET
-    public List<Message> getMessages() {
-        return messageService.getAllMessages();
+    public List<Message> getAllMessages(@QueryParam("year") int year,  @QueryParam("startIndex") int startIndex, @QueryParam("maxSize") int maxSize) {
+        if (year > 0) {
+            return messageService.getAllMessagesForYear(year);
+        } else if (maxSize > 0) {
+            return messageService.getAllMessagesPaginated(startIndex, maxSize);
+        } else {
+            return messageService.getAllMessages();
+        }
     }
     
     @GET

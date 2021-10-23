@@ -1,46 +1,62 @@
 package com.nghiem.messenger.service;
 
+import static com.nghiem.messenger.database.Database.messages;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.nghiem.messenger.model.Message;
 
 public class MessageService {
 
-    static List<Message> messages = new ArrayList<Message>();
-
     public MessageService() {
     }
 
     public List<Message> getAllMessages() {
-        return messages;
+        return new ArrayList<Message>(messages.values());
+    }
+
+    public List<Message> getAllMessagesForYear(int year) {
+        return messages.values().parallelStream().filter((msg) -> {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(msg.getCreated());
+            return calendar.get(Calendar.YEAR) == year;
+        }).collect(Collectors.toList());
+    }
+
+    public List<Message> getAllMessagesPaginated(int startIndex, int size) {
+        return messages.values().stream()
+                .sorted((m1, m2) -> Long.compare(m1.getId(), m2.getId()))
+                .skip(startIndex)
+                .limit(size)
+                .collect(Collectors.toList());
     }
 
     public void addMessages(Message msg) {
-        messages.add(msg);
+        messages.put(msg.getId(), msg);
     }
 
     public Message updateMessage(Message msg) {
         Message message = getMessage(msg.getId());
-        message.setMessage(msg.getMessage());
-        int i = messages.indexOf(message);
-        messages.set(i, message);
+        if (msg.getMessage() != null) {
+            message.setMessage(msg.getMessage());
+        }
+        if (msg.getAuthor() != null) {
+            message.setAuthor(msg.getAuthor());
+        }
+        if (msg.getCreated() != null) {
+            message.setCreated(msg.getCreated());
+        }
         return message;
     }
 
     public Message getMessage(long id) {
-        Optional<Message> result = messages.parallelStream().filter((msg) -> msg.getId() == id).findFirst();
-        return result.orElse(null);
+        return messages.get(id);
     }
 
     public Message deleteMessage(long id) {
-        Optional<Message> message = messages.parallelStream().filter((msg) -> msg.getId() == id).findAny();
-        if (message.isPresent()) {
-            Message msg = message.get();
-            messages.remove(msg);
-            return msg;
-        }
-        return null;
+        return messages.remove(id);
     }
 }
