@@ -1,4 +1,4 @@
-package com.nghiem.messenger.reources;
+package com.nghiem.messenger.resources;
 
 import java.util.Date;
 import java.util.List;
@@ -66,5 +66,10 @@ public class MessageResource {
             throw new NotFoundException("Message not found");
         }
         return deleteMessage;
+    }
+    
+    @Path("/{messageId}/comments")
+    public CommentResource getCommentsResource() {
+        return new CommentResource();
     }
 }

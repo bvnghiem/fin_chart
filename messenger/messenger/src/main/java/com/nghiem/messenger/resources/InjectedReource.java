@@ -1,4 +1,4 @@
-package com.nghiem.messenger.reources;
+package com.nghiem.messenger.resources;
 
 import jakarta.ws.rs.CookieParam;
 import jakarta.ws.rs.GET;
