@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.nghiem.messenger.exception.DataNotFoundException;
 import com.nghiem.messenger.model.Message;
 
 public class MessageService {
@@ -40,6 +41,9 @@ public class MessageService {
 
     public Message updateMessage(Message msg) {
         Message message = getMessage(msg.getId());
+        if(message == null) {
+            return null;
+        }
         if (msg.getMessage() != null) {
             message.setMessage(msg.getMessage());
         }
@@ -53,7 +57,11 @@ public class MessageService {
     }
 
     public Message getMessage(long id) {
-        return messages.get(id);
+        Message message = messages.get(id);
+        if(message == null) {
+            throw new DataNotFoundException("No message found with requested id: " + id);
+        }
+        return message;
     }
 
     public Message deleteMessage(long id) {

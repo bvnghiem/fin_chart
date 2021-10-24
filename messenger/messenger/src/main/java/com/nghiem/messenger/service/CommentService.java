@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nghiem.messenger.model.Comment;
+import com.nghiem.messenger.model.Message;
+
+import jakarta.ws.rs.InternalServerErrorException;
+import jakarta.ws.rs.NotFoundException;
 
 public class CommentService {
 
@@ -34,7 +38,17 @@ public class CommentService {
     }
 
     public Comment getComment(long msgId, long commentId) {
-        return messages.get(msgId).getComments().get(commentId);
+        Message message = messages.get(msgId);
+        if(message == null) {
+            throw new NotFoundException("No message found with ID: " + msgId);
+        }
+        
+        Comment comment = message.getComments().get(commentId);
+        if(comment == null) {
+            throw new NotFoundException("No comment found with ID: " + commentId);
+        }
+        
+        return comment;
     }
 
     public Comment deleteComment(long msgId, long commentId) {
