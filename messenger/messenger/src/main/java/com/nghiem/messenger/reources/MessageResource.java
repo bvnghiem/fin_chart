@@ -3,9 +3,11 @@ package com.nghiem.messenger.reources;
 import java.util.Date;
 import java.util.List;
 
+import com.nghiem.messenger.bean.MessageFilterBean;
 import com.nghiem.messenger.model.Message;
 import com.nghiem.messenger.service.MessageService;
 
+import jakarta.ws.rs.BeanParam;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -15,7 +17,6 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 
 @Path("messages")
@@ -26,11 +27,11 @@ public class MessageResource {
     private MessageService messageService = new MessageService();
 
     @GET
-    public List<Message> getAllMessages(@QueryParam("year") int year,  @QueryParam("startIndex") int startIndex, @QueryParam("maxSize") int maxSize) {
-        if (year > 0) {
-            return messageService.getAllMessagesForYear(year);
-        } else if (maxSize > 0) {
-            return messageService.getAllMessagesPaginated(startIndex, maxSize);
+    public List<Message> getAllMessages(@BeanParam MessageFilterBean filterBean) {
+        if (filterBean.getYear() > 0) {
+            return messageService.getAllMessagesForYear(filterBean.getYear());
+        } else if (filterBean.getMaxSize() > 0) {
+            return messageService.getAllMessagesPaginated(filterBean.getStartIndex(), filterBean.getMaxSize());
         } else {
             return messageService.getAllMessages();
         }
