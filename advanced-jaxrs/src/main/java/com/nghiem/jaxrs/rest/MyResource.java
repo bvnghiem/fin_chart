@@ -1,5 +1,7 @@
 package com.nghiem.jaxrs.rest;
 
+import java.util.Date;
+
 import org.glassfish.jersey.process.internal.RequestScoped;
 
 import jakarta.ws.rs.GET;
@@ -20,5 +22,12 @@ public class MyResource {
     @Produces(MediaType.TEXT_PLAIN)
     public String testMethod() {
         return "pathParam: " + pathParamEx + ", queryParam: " + queryParamEx;
+    }
+
+    @GET
+    @Path("shortdate")
+    @Produces("text/shortdate")
+    public Date testDateMethod() {
+        return new Date();
     }
 }
