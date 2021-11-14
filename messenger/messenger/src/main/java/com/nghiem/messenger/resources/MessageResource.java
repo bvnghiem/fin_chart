@@ -9,6 +9,7 @@ import com.nghiem.messenger.bean.MessageFilterBean;
 import com.nghiem.messenger.model.Message;
 import com.nghiem.messenger.service.MessageService;
 
+import jakarta.servlet.annotation.WebFilter;
 import jakarta.ws.rs.BeanParam;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
